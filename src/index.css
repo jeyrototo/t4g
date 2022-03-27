@@ -20,6 +20,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #282c34;
+  color: rgba(255, 255, 255, 0.897);
+  text-shadow: 0px 0px 9px #282c34be;
 }
 
 code {

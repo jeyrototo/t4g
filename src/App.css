@@ -1,21 +1,29 @@
 .App {
-  text-align: center;
-  color: white;
-  height: 100%;
-  width: 100%;
+  color: white
 }
 
 .App-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding-top: 20pt;
+  text-align: center;
   font-size: calc(10px + 2vmin);
+  position:relative;
+}
+
+.barchart {
+  position:relative;
+  margin-top: 40pt;
+  width: 95%;
+  /* width: 400px; */
+  height: 70vh;
 }
 
 .doughnut {
-  position: absolute;
-  display: flex;
-  width: 50%;
-  height: 50%;
+  /* position:absolute;
+  display: 'flex';*/
+  margin-top: 40pt;
+  /* margin-left: 40pt; */
+  /* width: 400px; */
+  width: 50vw;
+  height: 50vh;
 }
+
