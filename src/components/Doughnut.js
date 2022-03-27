@@ -8,6 +8,7 @@ const Doughnut = (props) => {
   const padAngle = 0.02;
   const padRadius = 170;
   const cornerRadius = 4;
+  const minimumDatasets = 30;
   const [totalDatasets, setTotalDatasets] = useState(0);
 
 
@@ -21,7 +22,7 @@ const Doughnut = (props) => {
     let otherCount = 0;
     for (var i = 0; i < data.length; i++){
 
-      if (data[i].data > 30) {
+      if (data[i].data >= minimumDatasets) {
         newDoughnutData.push(data[i]);
       }
       else {
@@ -57,10 +58,10 @@ const Doughnut = (props) => {
             // cursor={"pointer"}
             onClick={(e)=>{console.log(e.value)}}
             tooltip={<ChartTooltip
-              followCursor={true}
-              modifiers={{
-                offset: '5px, 5px'
-              }}
+              // followCursor={true}
+              // modifiers={{
+              //   offset: '0px, 0px'
+              // }}
               content={(data, color) => (
                 <TooltipTemplate
                   value={{
