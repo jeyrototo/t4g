@@ -43,9 +43,7 @@ const Doughnut = (props) => {
       data={doughnutData}
       displayAllLabels={true}
       // margins={20}
-
-      series={
-        
+      series={ 
         <PieArcSeries
         cornerRadius={cornerRadius}
         padAngle={padAngle}
@@ -53,13 +51,26 @@ const Doughnut = (props) => {
         doughnut={true}
         // colorScheme={chroma.scale(['#6ade78', '#000a7d']).colors(11)}
         colorScheme = {colorScheme}
-        //colorScheme={["#001219","#005f73","#0a9396","#94d2bd","#e9d8a6","#ee9b00","#ca6702","#bb3e03","#ae2012","#9b2226"]}
-        //colorScheme={"cybertron"}
         arcWidth={0.35}
         arc={
           <PieArc
-            cursor={"pointer"}
+            // cursor={"pointer"}
             onClick={(e)=>{console.log(e.value)}}
+            tooltip={<ChartTooltip
+              followCursor={true}
+              modifiers={{
+                offset: '5px, 5px'
+              }}
+              content={(data, color) => (
+                <TooltipTemplate
+                  value={{
+                    x: data.x,
+                    y: (data.y * 100 / totalDatasets).toFixed(1) +" % / "+ data.y + " Datasets"
+                  }}
+                />
+              )}>
+              
+            </ChartTooltip>}
           />
         }
         label={false}
