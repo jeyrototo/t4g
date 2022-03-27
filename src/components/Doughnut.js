@@ -5,37 +5,41 @@ import chroma from "chroma-js";
 
 const Doughnut = (props) => {
   const colorScheme = props.colorScheme;
+  const data = props.data
+  const selectedInstitutions = props.selectedInstitutions;
   const padAngle = 0.02;
   const padRadius = 170;
   const cornerRadius = 4;
   const minimumDatasets = 30;
   const [totalDatasets, setTotalDatasets] = useState(0);
 
-
   const [doughnutData, setDoughnutData] = useState();
 
   //Allocate all ministries that provide less than 30 dataset to "others"
   useEffect(()=>{
-    const data = props.data
     let newDoughnutData = [];
     let newTotalDatasets = 0;
     let otherCount = 0;
+
     for (var i = 0; i < data.length; i++){
-
-      if (data[i].data >= minimumDatasets) {
-        newDoughnutData.push(data[i]);
-      }
-      else {
-        otherCount += data[i].data
-      }
-
-      newTotalDatasets += data[i].data;
+      for (var j = 0; j < selectedInstitutions.length; j++) {
+        if (data[i].key === selectedInstitutions[j].name) {
+          if (data[i].data >= minimumDatasets) {
+            newDoughnutData.push(data[i]);
+          }
+          else {
+            otherCount += data[i].data
+          }
+    
+          newTotalDatasets += data[i].data;
+        }
+      }   
     }
     newDoughnutData.push({key: "Sonstige", data: otherCount})
     setDoughnutData(newDoughnutData);
     setTotalDatasets(newTotalDatasets);
 
-  }, [props.data])
+  }, [data, selectedInstitutions])
 
   return (
     <div className="d-flex align-items-center justify-content-center">

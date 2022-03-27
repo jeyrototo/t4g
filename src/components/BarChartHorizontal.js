@@ -1,9 +1,24 @@
-import React from 'react';
 import {BarChart, BarSeries, LinearYAxis, LinearXAxis, LinearYAxisTickSeries, Bar, GuideBar, BarLabel, TooltipArea, ChartTooltip, TooltipTemplate} from 'reaviz';
 import '../App.css';
+import { useState, useEffect } from 'react';
 
 const BarChartHorizontal = (props) => {
+  const data = props.data
   const colorScheme = props.colorScheme;
+  const selectedInstitutions = props.selectedInstitutions;
+  const [barChartData, setBarChartData] = useState([]);
+
+  useEffect(()=>{
+    let newBarChartData = [];
+    for (var i = 0; i < data.length; i++) {
+      for (var j = 0; j < selectedInstitutions.length; j++) {
+        if (data[i].key === selectedInstitutions[j].name) {
+          newBarChartData.push(data[i]);
+        }
+      }
+    }
+    setBarChartData(newBarChartData);
+  },[selectedInstitutions])
 
   return (
     <div className='barchart'>
@@ -11,7 +26,7 @@ const BarChartHorizontal = (props) => {
         // width={800}
         // height={500}
         gridlines={false}
-        data={props.data}
+        data={barChartData}
         xAxis={<LinearXAxis type="value" />}
         yAxis={
         <LinearYAxis
