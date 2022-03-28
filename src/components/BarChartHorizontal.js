@@ -6,6 +6,7 @@ const BarChartHorizontal = (props) => {
   const data = props.data
   const colorScheme = props.colorScheme;
   const selectedInstitutions = props.selectedInstitutions;
+  const setHoveredItem = props.setHoveredItem;
   const [barChartData, setBarChartData] = useState([]);
 
   useEffect(()=>{
@@ -14,6 +15,7 @@ const BarChartHorizontal = (props) => {
       for (var j = 0; j < selectedInstitutions.length; j++) {
         if (data[i].key === selectedInstitutions[j].name) {
           newBarChartData.push(data[i]);
+          break;
         }
       }
     }
@@ -23,8 +25,6 @@ const BarChartHorizontal = (props) => {
   return (
     <div className='barchart'>
       <BarChart
-        // width={800}
-        // height={500}
         gridlines={false}
         data={barChartData}
         xAxis={<LinearXAxis type="value" />}
@@ -36,35 +36,38 @@ const BarChartHorizontal = (props) => {
         }
         series={
         <BarSeries
-
-          tooltip={
-            <TooltipArea
-              tooltip={
-                <ChartTooltip
-                  followCursor={true}
-                  modifiers={{
-                    offset: '5px, 5px'
-                  }}
-                  content={(data, color) => (
-                    <TooltipTemplate
-                      value={{
-                        x: data.x+": "+data.y,
-                        y: null,
-                      }}
-                    />
-                  )}
-                />
-              }
-            />
-          }
+          animated={false}
+          tooltip={null}
+          // tooltip={
+          //   <TooltipArea
+          //     tooltip={
+          //       <ChartTooltip
+          //         followCursor={true}
+          //         modifiers={{
+          //           offset: '5px, 5px'
+          //         }}
+          //         content={(data, color) => (
+          //           <TooltipTemplate
+          //             value={{
+          //               x: data.x+": "+data.y,
+          //               y: null,
+          //             }}
+          //           />
+          //         )}
+          //       />
+          //     }
+          //   />
+          // }
           colorScheme={colorScheme}
           layout="horizontal"
           bar={
             <Bar 
+            onMouseEnter={(e)=>{setHoveredItem(e.value.key)}}
+            onMouseLeave={(e)=>{setHoveredItem(null)}}
             rx={3}
             ry={3}
             gradient={false} 
-            guide={<GuideBar/>}
+            // guide={<GuideBar/>}
             label={<BarLabel fill={"white"} position={"top"} fontSize={10} padding={6}/>}
             />}
         />

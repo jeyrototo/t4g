@@ -8,12 +8,16 @@ import FilterComponent from './components/FilterComponent';
 
 function App() {
   const [data, setData] = useState([]);
-  const colorScheme = ['#d53e4f','#f46d43','#fdae61','#abdda4','#66c2a5','#20ba89','#0c96a8','#4266c2','#6452bf','#8d58ad','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d','#b84b9d']
-  const [selectedInstitutions, setSelectedInstitutions] = useState()
+  const colorScheme = ['#d53e4f','#f46d43','#fdae61','#abdda4','#66c2a5','#20ba89','#0c96a8','#4266c2','#6452bf','#8d58ad','#b84b9d']
+  const [selectedInstitutions, setSelectedInstitutions] = useState();
+  const [colorsSelected, setColorsSelected] = useState(colorScheme);
+  const minimumDatasets = 30;
+  const [hoveredItem, setHoveredItem] = useState(null);
 
-  // useEffect(()=>{
-  //   console.log(selectedInstitutions)
-  // }, [selectedInstitutions])
+  let colorSchemeDark = [];
+  for (var i = 0; i < colorScheme.length; i++){
+    colorSchemeDark.push(chroma(colorScheme[i]).darken().desaturate());
+  }
 
   useEffect(()=>{
     fetch('backend-response.json'
@@ -39,6 +43,38 @@ function App() {
     }
     setData(newData);
     
+  }
+
+  //update color scheme when selection changes
+  useEffect(()=>{
+    setColors()
+  }, [selectedInstitutions, hoveredItem])
+
+  //set Colors according to selected and hovered Items
+  const setColors = ()=>{
+    let newColorsSelected = []
+    for (var i = 0; i < data.length; i++){
+      for (var j = 0; j < selectedInstitutions.length; j++) {
+        if (data[i].key === selectedInstitutions[j].name){ //check if item is selected
+          if (data[i].data >= minimumDatasets) { //check if number of datasets >= 30
+            if (data[i].key === hoveredItem || hoveredItem === null) { //highlight only hovered bar
+              newColorsSelected.push(colorScheme[i])
+            } else {
+              newColorsSelected.push(colorSchemeDark[i]) 
+            }
+          } else { //same color for institutions with datasets < 30
+            if (data[i].key === hoveredItem || hoveredItem === null) { //highlight only hovered bar
+              newColorsSelected.push(colorScheme[colorScheme.length-1]) 
+            } else {
+              newColorsSelected.push(colorSchemeDark[colorSchemeDark.length-1]) 
+            }
+            
+          }          
+          break;
+        }
+      }
+    }
+    setColorsSelected(newColorsSelected)
   }
 
   return (
@@ -76,11 +112,11 @@ function App() {
       <Col xs={3} md = {2} lg={2}></Col>
       
       <Col xs={8} md = {6} lg={5}>
-        <BarChartHorizontal data = {data} colorScheme = {colorScheme} selectedInstitutions={selectedInstitutions}/>
+        <BarChartHorizontal data = {data} colorScheme = {colorsSelected} selectedInstitutions={selectedInstitutions} setHoveredItem={setHoveredItem}/>
       </Col>
 
       <Col xs={12} md = {4} lg={5}>
-        <Doughnut data={data} colorScheme = {colorScheme} selectedInstitutions={selectedInstitutions}/>
+        <Doughnut data={data} colorScheme = {colorsSelected} selectedInstitutions={selectedInstitutions} minimumDatasets={minimumDatasets} setHoveredItem={setHoveredItem}/>
       </Col>
 
       </Row>

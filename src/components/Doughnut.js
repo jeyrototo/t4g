@@ -7,12 +7,14 @@ const Doughnut = (props) => {
   const colorScheme = props.colorScheme;
   const data = props.data
   const selectedInstitutions = props.selectedInstitutions;
+  const minimumDatasets = props.minimumDatasets;
+  const setHoveredItem = props.setHoveredItem;
+
   const padAngle = 0.02;
   const padRadius = 170;
   const cornerRadius = 4;
-  const minimumDatasets = 30;
-  const [totalDatasets, setTotalDatasets] = useState(0);
 
+  const [totalDatasets, setTotalDatasets] = useState(0);
   const [doughnutData, setDoughnutData] = useState();
 
   //Allocate all ministries that provide less than 30 dataset to "others"
@@ -32,6 +34,7 @@ const Doughnut = (props) => {
           }
     
           newTotalDatasets += data[i].data;
+          break;
         }
       }   
     }
@@ -60,7 +63,8 @@ const Doughnut = (props) => {
         arc={
           <PieArc
             // cursor={"pointer"}
-            onClick={(e)=>{console.log(e.value)}}
+            onMouseEnter={(e)=>{setHoveredItem(e.value.key)}}
+            onMouseLeave={(e)=>{setHoveredItem(null)}}
             tooltip={<ChartTooltip
               // followCursor={true}
               // modifiers={{
