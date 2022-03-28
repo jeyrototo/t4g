@@ -38,7 +38,7 @@ const Doughnut = (props) => {
         }
       }   
     }
-    newDoughnutData.push({key: "Sonstige", data: otherCount})
+    newDoughnutData.push({key: "Others", data: otherCount})
     setDoughnutData(newDoughnutData);
     setTotalDatasets(newTotalDatasets);
 
@@ -57,12 +57,12 @@ const Doughnut = (props) => {
         padAngle={padAngle}
         padRadius={padRadius}
         doughnut={true}
-        // colorScheme={chroma.scale(['#6ade78', '#000a7d']).colors(11)}
         colorScheme = {colorScheme}
         arcWidth={0.35}
         arc={
           <PieArc
             // cursor={"pointer"}
+            // animated={false}
             onMouseEnter={(e)=>{setHoveredItem(e.value.key)}}
             onMouseLeave={(e)=>{setHoveredItem(null)}}
             tooltip={<ChartTooltip

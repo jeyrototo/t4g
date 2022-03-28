@@ -25,6 +25,7 @@ const BarChartHorizontal = (props) => {
   return (
     <div className='barchart'>
       <BarChart
+        animated={false}
         gridlines={false}
         data={barChartData}
         xAxis={<LinearXAxis type="value" />}
@@ -61,7 +62,8 @@ const BarChartHorizontal = (props) => {
           colorScheme={colorScheme}
           layout="horizontal"
           bar={
-            <Bar 
+            <Bar
+            animated={false}
             onMouseEnter={(e)=>{setHoveredItem(e.value.key)}}
             onMouseLeave={(e)=>{setHoveredItem(null)}}
             rx={3}

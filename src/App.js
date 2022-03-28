@@ -5,19 +5,21 @@ import { useState, useEffect } from 'react';
 import BarChartHorizontal from './components/BarChartHorizontal';
 import chroma from "chroma-js";
 import FilterComponent from './components/FilterComponent';
+import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
   const [data, setData] = useState([]);
   const colorScheme = ['#d53e4f','#f46d43','#fdae61','#abdda4','#66c2a5','#20ba89','#0c96a8','#4266c2','#6452bf','#8d58ad','#b84b9d']
+  let colorSchemeDark = [];
+  for (var i = 0; i < colorScheme.length; i++){
+    colorSchemeDark.push(chroma(colorScheme[i]).darken().desaturate());
+  }
   const [selectedInstitutions, setSelectedInstitutions] = useState();
   const [colorsSelected, setColorsSelected] = useState(colorScheme);
   const minimumDatasets = 30;
   const [hoveredItem, setHoveredItem] = useState(null);
 
-  let colorSchemeDark = [];
-  for (var i = 0; i < colorScheme.length; i++){
-    colorSchemeDark.push(chroma(colorScheme[i]).darken().desaturate());
-  }
+
 
   useEffect(()=>{
     fetch('backend-response.json'
@@ -53,6 +55,20 @@ function App() {
   //set Colors according to selected and hovered Items
   const setColors = ()=>{
     let newColorsSelected = []
+    let isHoveredInOthers = false; 
+
+    //check if hovered ministry has less than 30 datasets --> belongs to "Others"
+    if (hoveredItem){
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].key === hoveredItem){
+          if (data[i].data < minimumDatasets){
+            isHoveredInOthers = true;
+            break;
+          }
+        }
+      }
+    }
+
     for (var i = 0; i < data.length; i++){
       for (var j = 0; j < selectedInstitutions.length; j++) {
         if (data[i].key === selectedInstitutions[j].name){ //check if item is selected
@@ -62,8 +78,8 @@ function App() {
             } else {
               newColorsSelected.push(colorSchemeDark[i]) 
             }
-          } else { //same color for institutions with datasets < 30
-            if (data[i].key === hoveredItem || hoveredItem === null) { //highlight only hovered bar
+          } else { //same color for institutions with datasets < 30 ("Others")
+            if (isHoveredInOthers || hoveredItem === null || hoveredItem === "Others") { //highlight all items that belong to "Others"
               newColorsSelected.push(colorScheme[colorScheme.length-1]) 
             } else {
               newColorsSelected.push(colorSchemeDark[colorSchemeDark.length-1]) 
@@ -78,7 +94,8 @@ function App() {
   }
 
   return (
-    <Container fluid className="App">
+    <ErrorBoundary>
+      <Container fluid className="App">
 
       <Row className="d-flex justify-content-center">
         <Col xs={6} md = {2} lg={2}>
@@ -101,16 +118,10 @@ function App() {
           </div>
         </Col>
       </Row>
-
-      {/* <Row className="d-flex justify-content-center">
-        <Col xs={6} md = {6} lg={12}>
-          <FilterComponent data={data}></FilterComponent>
-        </Col>
-      </Row> */}
-
+      
       <Row className="d-flex justify-content-center">
       <Col xs={3} md = {2} lg={2}></Col>
-      
+
       <Col xs={8} md = {6} lg={5}>
         <BarChartHorizontal data = {data} colorScheme = {colorsSelected} selectedInstitutions={selectedInstitutions} setHoveredItem={setHoveredItem}/>
       </Col>
@@ -121,7 +132,9 @@ function App() {
 
       </Row>
 
-    </Container>
+      </Container>
+    </ErrorBoundary>
+    
   );
 }
 
