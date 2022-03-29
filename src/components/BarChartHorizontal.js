@@ -1,4 +1,4 @@
-import {BarChart, BarSeries, LinearYAxis, LinearXAxis, LinearYAxisTickSeries, Bar, GuideBar, BarLabel, TooltipArea, ChartTooltip, TooltipTemplate} from 'reaviz';
+import {BarChart, BarSeries, LinearYAxis, LinearXAxis, LinearYAxisTickSeries, Bar, GuideBar, BarLabel, LinearYAxisTickLabel, TooltipArea, ChartTooltip, TooltipTemplate} from 'reaviz';
 import '../App.css';
 import { useState, useEffect } from 'react';
 
@@ -23,42 +23,47 @@ const BarChartHorizontal = (props) => {
   },[selectedInstitutions])
 
   return (
-    <div className='barchart'>
+    <div className='barchart' role="barchart">
       <BarChart
         animated={false}
-        gridlines={false}
+        // gridlines={false}
         data={barChartData}
         xAxis={<LinearXAxis type="value" />}
         yAxis={
         <LinearYAxis
             type="category"
-            tickSeries={<LinearYAxisTickSeries tickSize={20} />}
+            tickSeries={
+            <LinearYAxisTickSeries 
+              tickSize={20} 
+              label={<LinearYAxisTickLabel padding={5}/>}
+            />}
         />
         }
         series={
         <BarSeries
           animated={false}
-          tooltip={null}
-          // tooltip={
-          //   <TooltipArea
-          //     tooltip={
-          //       <ChartTooltip
-          //         followCursor={true}
-          //         modifiers={{
-          //           offset: '5px, 5px'
-          //         }}
-          //         content={(data, color) => (
-          //           <TooltipTemplate
-          //             value={{
-          //               x: data.x+": "+data.y,
-          //               y: null,
-          //             }}
-          //           />
-          //         )}
-          //       />
-          //     }
-          //   />
-          // }
+          // tooltip={null}
+          tooltip={
+            <TooltipArea
+              placement='right'
+              tooltip={
+                <ChartTooltip
+                  followCursor={true}
+                  modifiers={{
+                    offset: '5px, 5px'
+                  }}
+                  content={(data, color) => (
+                    <TooltipTemplate
+                      value={{
+                        x: data.x+": "+data.y,
+                        y: null,
+                      }}
+                    />
+                  )}
+                />
+              }
+            />
+          }
           colorScheme={colorScheme}
           layout="horizontal"
           bar={
@@ -70,7 +75,7 @@ const BarChartHorizontal = (props) => {
             ry={3}
             gradient={false} 
             // guide={<GuideBar/>}
-            label={<BarLabel fill={"white"} position={"top"} fontSize={10} padding={6}/>}
+            // label={<BarLabel fill={"white"} position={"top"} fontSize={10} padding={6}/>}
             />}
         />
         }

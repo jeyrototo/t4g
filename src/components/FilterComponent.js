@@ -23,12 +23,10 @@ const FilterComponent = (props) => {
     
 
     return (
-        <div>
-            <div className="card" style={{color: "white", backgroundColor: "transparent", border: "transparent", width: "200px", marginTop: "30px", marginLeft: "20px"}}>
-
+        <div className="card" style={{color: "white", backgroundColor: "transparent", border: "transparent", width: "200px", marginTop: "30px", marginLeft: "20px"}}>
+                <div style={{fontFamily: "FuturaPTBook"}}>Filter Institutions:</div>
                 <MultiSelect value={selectedInstitutions} options={options} onChange={(e) => {setSelectedInstitutions(e.value)}} optionLabel="name" placeholder="Select Institutions" maxSelectedLabels={1} />
 
-            </div>
         </div>
     );
 }

@@ -19,8 +19,6 @@ function App() {
   const minimumDatasets = 30;
   const [hoveredItem, setHoveredItem] = useState(null);
 
-
-
   useEffect(()=>{
     fetch('backend-response.json'
     ,{
@@ -38,13 +36,14 @@ function App() {
       });
   }, [])
 
+
   const prepareData = (jsonData) => {
     let newData = [];
     for (var i = 0; i < jsonData.length; i++){
       newData.push({key: jsonData[i].department, data: jsonData[i].datasets});
     }
     setData(newData);
-    
+   
   }
 
   //update color scheme when selection changes

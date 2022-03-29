@@ -94,7 +94,7 @@ const Doughnut = (props) => {
       }
       />
 
-      <div style={{position: 'absolute', textAlign: "center"}}>
+      <div style={{position: 'absolute', textAlign: "center"}} role="doughnut">
          Total:<br>
          </br>{totalDatasets} Datasets <br/>
       </div>
