@@ -8,6 +8,10 @@ You can view the dashboard online here: [https://t4g.vercel.app/](https://t4g.ve
 
 In the project directory, you can run: 
 
+### `npm install`
+
+Installs the required dependencies
+
 ### `npm start`
 
 Runs the app in the development mode.\

@@ -106,7 +106,7 @@ function App() {
           GovData Dashboard
         </p>
         </Col>
-        <Col xs={6} md = {2} lg={2}>
+        <Col xs={0} md = {2} lg={2}>
         </Col>
       </Row>
 
@@ -120,7 +120,7 @@ function App() {
       </Row>
       
       <Row className="d-flex justify-content-center">
-      <Col xs={3} md = {2} lg={2}></Col>
+      <Col xs={2} md = {2} lg={2}></Col>
 
       <Col xs={8} md = {6} lg={5}>
         <BarChartHorizontal data = {data} colorScheme = {colorsSelected} selectedInstitutions={selectedInstitutions} setHoveredItem={setHoveredItem}/>
