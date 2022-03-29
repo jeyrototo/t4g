@@ -19,6 +19,7 @@ function App() {
   const minimumDatasets = 30;
   const [hoveredItem, setHoveredItem] = useState(null);
 
+  //fetch from API
   useEffect(()=>{
     fetch('backend-response.json'
     ,{
@@ -48,17 +49,13 @@ function App() {
 
   //update color scheme when selection changes
   useEffect(()=>{
-    setColors()
-  }, [selectedInstitutions, hoveredItem])
 
-  //set Colors according to selected and hovered Items
-  const setColors = ()=>{
     let newColorsSelected = []
     let isHoveredInOthers = false; 
 
     //check if hovered ministry has less than 30 datasets --> belongs to "Others"
     if (hoveredItem){
-      for (var i = 0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         if (data[i].key === hoveredItem){
           if (data[i].data < minimumDatasets){
             isHoveredInOthers = true;
@@ -68,8 +65,8 @@ function App() {
       }
     }
 
-    for (var i = 0; i < data.length; i++){
-      for (var j = 0; j < selectedInstitutions.length; j++) {
+    for (let i = 0; i < data.length; i++){
+      for (let j = 0; j < selectedInstitutions.length; j++) {
         if (data[i].key === selectedInstitutions[j].name){ //check if item is selected
           if (data[i].data >= minimumDatasets) { //check if number of datasets >= 30
             if (data[i].key === hoveredItem || hoveredItem === null) { //highlight only hovered bar
@@ -90,7 +87,11 @@ function App() {
       }
     }
     setColorsSelected(newColorsSelected)
-  }
+
+    //eslint-disable-next-line
+  }, [selectedInstitutions, hoveredItem])
+
+  
 
   return (
     <ErrorBoundary>

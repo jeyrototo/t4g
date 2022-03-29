@@ -13,16 +13,11 @@
   position:relative;
   margin-top: 40pt;
   width: 95%;
-  /* width: 400px; */
   height: 70vh;
 }
 
 .doughnut {
-  /* position:absolute;
-  display: 'flex';*/
   margin-top: 40pt;
-  /* margin-left: 40pt; */
-  /* width: 400px; */
   width: 50vw;
   height: 50vh;
 }

@@ -18,15 +18,15 @@ const FilterComponent = (props) => {
         }
         setOptions(newOptions); //display all options
         setSelectedInstitutions(newOptions); //select all as default
-          
+    
+    //eslint-disable-next-line
     }, [data])
     
 
     return (
         <div className="card" style={{color: "white", backgroundColor: "transparent", border: "transparent", width: "200px", marginTop: "30px", marginLeft: "20px"}}>
-                <div style={{fontFamily: "FuturaPTBook"}}>Filter Institutions:</div>
-                <MultiSelect value={selectedInstitutions} options={options} onChange={(e) => {setSelectedInstitutions(e.value)}} optionLabel="name" placeholder="Select Institutions" maxSelectedLabels={1} />
-
+            <div style={{fontFamily: "FuturaPTBook"}}>Filter Institutions:</div>
+            <MultiSelect value={selectedInstitutions} options={options} onChange={(e) => {setSelectedInstitutions(e.value)}} optionLabel="name" placeholder="Select Institutions" maxSelectedLabels={1} />
         </div>
     );
 }

@@ -163,14 +163,14 @@ describe('App', () => {
   it('renders Doughnut', async () => {
     render(<App />);
 
-    expect(await screen.findByRole("doughnut")).toBeInTheDocument(); //doughnut
+    expect(await screen.findByTestId("doughnut")).toBeInTheDocument(); //doughnut
     // screen.debug();
   });
 
   it('renders BarChart', async () => {
     render(<App />);
 
-    expect(await screen.findByRole("barchart")).toBeInTheDocument(); //barchart
+    expect(await screen.findByTestId("barchart")).toBeInTheDocument(); //barchart
     // screen.debug();
   });
 

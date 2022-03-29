@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { PieChart, PieArcSeries, PieArcLabel, PieArc, ChartTooltip, TooltipTemplate, ToolTipTemplateProps, TooltipArea } from 'reaviz';
+import { PieChart, PieArcSeries, PieArc, ChartTooltip, TooltipTemplate} from 'reaviz';
 import '../App.css';
-import chroma from "chroma-js";
 
 const Doughnut = (props) => {
   const colorScheme = props.colorScheme;
@@ -42,7 +41,8 @@ const Doughnut = (props) => {
     setDoughnutData(newDoughnutData);
     setTotalDatasets(newTotalDatasets);
 
-  }, [data, selectedInstitutions])
+    //eslint-disable-next-line
+  }, [data, selectedInstitutions, minimumDatasets])
 
   return (
     <div className="d-flex align-items-center justify-content-center">
@@ -50,7 +50,6 @@ const Doughnut = (props) => {
       <PieChart
       data={doughnutData}
       displayAllLabels={true}
-      // margins={20}
       series={ 
         <PieArcSeries
         cornerRadius={cornerRadius}
@@ -61,15 +60,9 @@ const Doughnut = (props) => {
         arcWidth={0.35}
         arc={
           <PieArc
-            // cursor={"pointer"}
-            // animated={false}
             onMouseEnter={(e)=>{setHoveredItem(e.value.key)}}
             onMouseLeave={(e)=>{setHoveredItem(null)}}
             tooltip={<ChartTooltip
-              // followCursor={true}
-              // modifiers={{
-              //   offset: '0px, 0px'
-              // }}
               content={(data, color) => (
                 <TooltipTemplate
                   value={{
@@ -78,25 +71,16 @@ const Doughnut = (props) => {
                   }}
                 />
               )}>
-              
             </ChartTooltip>}
           />
         }
         label={false}
-        // label={
-        //   <PieArcLabel
-        //     fontFamily='FuturaPTBook'
-        //     fontSize={16}
-            
-        //   />
-        // }
         />
       }
       />
 
-      <div style={{position: 'absolute', textAlign: "center"}} role="doughnut">
-         Total:<br>
-         </br>{totalDatasets} Datasets <br/>
+      <div style={{position: 'absolute', textAlign: "center"}} data-testid="doughnut">
+         Total:<br/> {totalDatasets} Datasets
       </div>
     </div>
     </div>

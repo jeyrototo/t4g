@@ -1,4 +1,4 @@
-import {BarChart, BarSeries, LinearYAxis, LinearXAxis, LinearYAxisTickSeries, Bar, GuideBar, BarLabel, LinearYAxisTickLabel, TooltipArea, ChartTooltip, TooltipTemplate} from 'reaviz';
+import {BarChart, BarSeries, LinearYAxis, LinearXAxis, LinearYAxisTickSeries, Bar, LinearYAxisTickLabel, TooltipArea, ChartTooltip, TooltipTemplate} from 'reaviz';
 import '../App.css';
 import { useState, useEffect } from 'react';
 
@@ -7,8 +7,10 @@ const BarChartHorizontal = (props) => {
   const colorScheme = props.colorScheme;
   const selectedInstitutions = props.selectedInstitutions;
   const setHoveredItem = props.setHoveredItem;
+
   const [barChartData, setBarChartData] = useState([]);
 
+  //setup bar chart data
   useEffect(()=>{
     let newBarChartData = [];
     for (var i = 0; i < data.length; i++) {
@@ -20,10 +22,10 @@ const BarChartHorizontal = (props) => {
       }
     }
     setBarChartData(newBarChartData);
-  },[selectedInstitutions])
+  },[selectedInstitutions, data])
 
   return (
-    <div className='barchart' role="barchart">
+    <div className='barchart' data-testid="barchart">
       <BarChart
         animated={false}
         // gridlines={false}
@@ -42,7 +44,6 @@ const BarChartHorizontal = (props) => {
         series={
         <BarSeries
           animated={false}
-          // tooltip={null}
           tooltip={
             <TooltipArea
               placement='right'
@@ -74,8 +75,6 @@ const BarChartHorizontal = (props) => {
             rx={3}
             ry={3}
             gradient={false} 
-            // guide={<GuideBar/>}
-            // label={<BarLabel fill={"white"} position={"top"} fontSize={10} padding={6}/>}
             />}
         />
         }
